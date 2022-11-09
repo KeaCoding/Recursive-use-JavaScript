@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Đệ quy</title>
+</head>
+<body>
+   <script>
+   	  var arrInput = [
+        {
+        	Id:'01',
+        	Name:'A01',
+        	ParentId:'Null'
+        },
+        {
+        	Id:'02',
+        	Name:'A02',
+        	ParentId:'01'
+        },
+        {
+        	Id:'03',
+        	Name:'A03',
+        	ParentId:'02'
+        },
+        {
+        	Id:'04',
+        	Name:'A04',
+        	ParentId:'01'
+        },
+        {
+        	Id:'05',
+        	Name:'A05',
+        	ParentId:'Null'
+        },
+    ]
+
+    var arrOutput = [
+        {
+        	STT:'1',
+        	Id:'01',
+        	Name:'A01',
+        	ParentId:'Null',
+        	ListChild:[
+               {
+               	STT:'1.1',
+               	Id:'02',
+               	Name:'A02',
+               	ParentId:'01',
+               	ListChild:[
+                   {
+                   	 STT:'1.1.1',
+                   	 Id:'03',
+                   	 Name:'A03',
+                   	 ParentId:'02',
+                   	 ListChild:[]
+                   }
+               	]
+               },
+               {
+               	STT:'1.2',
+               	Id:'04',
+               	Name:'A04',
+               	ParentId:'01',
+               	ListChild:[]
+               }
+        	]
+        },
+        {
+        	STT:'02',
+        	Id:'05',
+        	Name:'A05',
+        	ParrentId:'Null',
+        	ListChild:[]
+        }
+    ]
+
+    console.log(arrInput);
+
+    console.log(arrOutput);
+
+    function GetTree(){
+       var result = [];
+       
+       var stt = 1;
+       arrInput.forEach(x=>{
+       	  if(x.ParentId == "Null"){
+       	  	var listChild = GetChild(stt,x.Id,arrInput);
+            var object = {
+          	STT:stt.toString(),
+          	Id:x.Id,
+          	Name:x.Name,
+          	ParrentId:x.ParentId,
+          	ListChild:listChild
+          };
+          
+          result.push(object);
+          stt = stt + 1;
+       	}
+       	  
+       });
+
+       return result;
+    }
+
+    function GetChild(stt,id,listChild){
+       var result = [];
+       
+       var st = 1;
+       listChild.forEach(x=>{
+         if(x.ParentId == id){
+         	var sttChild = stt.toString() + "." + st.toString();
+         	var lstChild = GetChild(sttChild,x.Id,listChild);
+         	var object = {
+         		STT:sttChild,
+         		Id:x.Id,
+         		Name:x.Name,
+         		ParrentId:x.ParentId,
+         		ListChild:lstChild
+         	};
+            
+            result.push(object);
+            st = st + 1;
+         };
+       });
+
+       return result;
+    }
+
+    var r = GetTree();
+    console.log(r);
+
+    function GetFlat(){
+    	var result = [];
+
+        var r = GetTree();
+
+        r.forEach(x=>{
+           var object = {
+              STT:x.STT,
+              Id:x.Id,
+              Name:x.Name,
+              ParrentId:x.ParrentId
+           };
+
+           result.push(object);
+
+           if(x.ListChild != null && x.ListChild.length > 0){
+              var listChild = GetChildFlat(x.ListChild);
+
+              listChild.forEach(x=>{
+                 result.push(x);
+              })
+           }
+
+        });
+
+    	return result;
+    }
+
+    function GetChildFlat(listChild){
+    	var result = [];
+
+    	listChild.forEach(x=>{
+           var object = {
+              STT:x.STT,
+              Id:x.Id,
+              Name:x.Name,
+              ParrentId:x.ParrentId
+           };
+
+           result.push(object);
+
+           if(x.ListChild != null && x.ListChild.length > 0){
+              var listChild = GetChildFlat(x.ListChild);
+              
+              listChild.forEach(x=>{
+                result.push(x);
+              });
+           }
+    	});
+
+    	return result;
+    }
+
+    var r1 = GetFlat();
+
+    console.log(r1);
+
+   </script>
+</body>
+</html>

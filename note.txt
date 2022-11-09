@@ -1,0 +1,148 @@
+// Ví dụ khi nào sử dụng đệ quy và cách giải đệ quy từ một mảng tree thành một mảng phẳng (flat)
+
+   	// Ví dụ khi phải sử dụng đệ quy 
+
+    var arrInput = [
+        {
+        	Id:01,
+        	Name:A01,
+        	ParentId:Null
+        },
+        {
+        	Id:02,
+        	Name:A02,
+        	ParentId:01
+        },
+        {
+        	Id:03,
+        	Name:A03,
+        	ParentId:02
+        },
+        {
+        	Id:04,
+        	Name:A04,
+        	ParentId:01
+        },
+        {
+        	Id:05,
+        	Name:A05,
+        	ParentId:Null
+        },
+    ]
+
+
+    var arrOutput = [
+        {
+        	STT:1,
+        	Name:01,
+        	ParentId:Null,
+        	ListChild:[
+               {
+               	STT:1.1,
+               	Id:02,
+               	Name:A02,
+               	ParentId:01,
+               	ListChild:[
+                   {
+                   	 STT:1.1.1,
+                   	 Id:03,
+                   	 Name:A03,
+                   	 ParentId:02,
+                   	 ListChild:[]
+                   }
+               	]
+               },
+               {
+               	STT:1.2,
+               	Id:04,
+               	Name:A04,
+               	ParentId:01,
+               	ListChild:[]
+               }
+        	]
+        },
+        {
+        	STT:02,
+        	Id:05,
+        	Name:A05,
+        	ParrentId:Null,
+        	ListChild:[]
+        }
+    ]
+
+    console.log(arrOutput);
+
+    // Ví dụ giải đệ quy từ mảng cha con (tree) thành mảng phẳng(flat)
+
+    var arrInput = [
+        {
+        	STT:1,
+        	Name:01,
+        	ParentId:Null,
+        	ListChild:[
+               {
+               	STT:1.1,
+               	Id:02,
+               	Name:A02,
+               	ParentId:01,
+               	ListChild:
+               	       [
+                          {
+                   	         STT:1.1.1,
+                   	         Id:03,
+                   	         Name:A03,
+                   	         ParentId:02,
+                   	         ListChild:[]
+                          }
+               	        ]
+               },
+               {
+               	STT:1.2,
+               	Id:04,
+               	Name:A04,
+               	ParentId:01,
+               	ListChild:[]
+               }
+        	]
+        },
+        {
+        	STT:02,
+        	Id:05,
+        	Name:A05,
+        	ParrentId:Null,
+        	ListChild:[]
+        }
+    ]
+
+    var arrOutput = [
+        {
+        	STT:1,
+        	Id:01,
+        	Name:A01,
+        	ParrentId:Null
+        },
+        {
+        	STT:1.1,
+        	Id:02,
+        	Name:A02,
+        	ParrentId:01
+        },
+        {
+        	STT:1.1.1,
+        	Id:03,
+        	Name:A03,
+        	ParrentId:02
+        },
+        {
+        	STT:1.2,
+        	Id:04,
+        	Name:A04,
+        	ParrentId:01
+        },
+        {
+        	STT:2,
+        	Id:05,
+        	Name:A05,
+        	ParrentId:Null
+        },
+    ]
